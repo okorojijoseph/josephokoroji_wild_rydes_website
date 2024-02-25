@@ -1,20 +1,23 @@
-# This is to use the official Python image
+# Use the official Python image as the base image
 FROM python:3.9-slim
 
-# This is to set the working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# This is to copy the current directory contents into the container at /app
-COPY . /app
+# Copy the requirements file into the container at /app
+COPY requirements.txt .
 
-# This is to install Flask
-RUN pip install --no-cache-dir flask
+# Install Flask and other dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# This is to expose port 5000
-EXPOSE 5000
+# Copy the current directory contents into the container at /app
+COPY . .
 
-# This is to define environment variable
+# Expose port 8080 to allow external access
+EXPOSE 8080
+
+# Define environment variable
 ENV FLASK_APP=app.py
 
-# This is to run app.py when the container launches
-CMD ["flask", "run", "--host=0.0.0.0"]
+# Run the Flask application when the container launches
+CMD ["flask", "run", "--host=0.0.0.0", "--port=8080"]
