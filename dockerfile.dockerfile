@@ -7,15 +7,14 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY . /app
 
-# Install Flask and other dependencies
+# Install Flask
 RUN pip install --no-cache-dir flask
 
 # Expose port 8080 to the outside world
 EXPOSE 8080
 
-# Set environment variables
+# Define environment variable
 ENV FLASK_APP=app.py
-ENV FLASK_RUN_HOST=0.0.0.0
 
 # Command to run the Flask application
-CMD ["flask", "run"]
+CMD ["flask", "run", "--host=0.0.0.0"]
