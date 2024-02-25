@@ -1,0 +1,12 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/omega-baton-401802/josephokorojiimage', '.']
+  
+  # Push the Docker image to Google Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/omega-baton-401802/josephokorojiimage']
+
+  # Deploy the Docker image to Cloud Run
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['run', 'deploy', 'josephokorojiservice', '--image', 'gcr.io/omega-baton-401802/josephokorojiimage', '--region', 'us-central1']
