@@ -10,3 +10,6 @@ steps:
   # Deploy the Docker image to Cloud Run
   - name: 'gcr.io/cloud-builders/gcloud'
     args: ['run', 'deploy', 'josephokorojiservice', '--image', 'gcr.io/omega-baton-401802/josephokorojiimage', '--region', 'us-central1']
+
+options:
+  logging: CLOUD_LOGGING_ONLY
