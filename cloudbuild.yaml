@@ -1,17 +1,17 @@
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/omega-baton-401802/josephokorojiwild-rydes-website/josephokorojiimage:${COMMIT_SHA}', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/omega-baton-401802/josephokorojiwild-rydes-website/josephokorojiimage-100912328:${COMMIT_SHA}', '.']
     
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/omega-baton-401802/josephokorojiwild-rydes-website/josephokorojiimage:${COMMIT_SHA}']
+    args: ['push', 'us-central1-docker.pkg.dev/omega-baton-401802/josephokorojiwild-rydes-website/josephokorojiimage-100912328:${COMMIT_SHA}']
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'sh'
     args: 
       - '-c'
       - |
-        gcloud run deploy wild-rydes-service \
-          --image=us-central1-docker.pkg.dev/omega-baton-401802/josephokorojiwild-rydes-website/josephokorojiimage:${COMMIT_SHA} \
+        gcloud run deploy josephokoroji-wild-rydes-service-100912328 \
+          --image=us-central1-docker.pkg.dev/omega-baton-401802/josephokorojiwild-rydes-website/josephokorojiimage-100912328:${COMMIT_SHA} \
           --platform=managed \
           --region=us-central1 \
           --port=3000 \
@@ -21,4 +21,4 @@ options:
   defaultLogsBucketBehavior: 'REGIONAL_USER_OWNED_BUCKET'
 
 images:
-  - 'us-central1-docker.pkg.dev/omega-baton-401802/wild-rydes/josephokorojiimage:${COMMIT_SHA}'
+  - 'us-central1-docker.pkg.dev/omega-baton-401802/josephokoroji_wild_rydes_website/josephokorojiimage-100912328:${COMMIT_SHA}'
