@@ -1,15 +1,24 @@
 steps:
-  # Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/omega-baton-401802/josephokorojiimage', '.']
-  
-  # Push the Docker image to Google Container Registry
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/omega-baton-401802/wild-rydes/josephokorojiimage:${COMMIT_SHA}', '.']
+    
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/omega-baton-401802/josephokorojiimage']
+    args: ['push', 'us-central1-docker.pkg.dev/omega-baton-401802/wild-rydes/josephokorojiimage:${COMMIT_SHA}']
 
-  # Deploy the Docker image to Cloud Run
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['run', 'deploy', 'josephokorojiservice', '--image', 'gcr.io/omega-baton-401802/josephokorojiimage', '--region', 'us-central1']
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'sh'
+    args: 
+      - '-c'
+      - |
+        gcloud run deploy wild-rydes-service \
+          --image=us-central1-docker.pkg.dev/omega-baton-401802/wild-rydes/josephokorojiimage:${COMMIT_SHA} \
+          --platform=managed \
+          --region=us-central1 \
+          --port=3000 \
+          --allow-unauthenticated
 
 options:
-  logging: CLOUD_LOGGING_ONLY
+  defaultLogsBucketBehavior: 'REGIONAL_USER_OWNED_BUCKET'
+
+images:
+  - 'us-central1-docker.pkg.dev/omega-baton-401802/wild-rydes/josephokorojiimage:${COMMIT_SHA}'
