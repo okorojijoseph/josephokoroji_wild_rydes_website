@@ -31,7 +31,7 @@ RUN npm install
 EXPOSE 3000
 
 # Set the default execution command for the container
-CMD ["node", "node.json"]
+CMD ["node", "node.js"]
 
 # Metadata indicating the developer's name and student number
 LABEL maintainer="josephokoroji"
